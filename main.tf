@@ -67,7 +67,6 @@ resource "aws_route_table_association" "terraform-attach-subnet" {
 
 resource "aws_eip" "random-ip" {
   vpc = true
-  # 52.66.129.231
   tags = {
     Name = "random-ip"
   }
@@ -126,12 +125,17 @@ variable "ami" {
   default = "ami-04893cdb768d0f9ee"
 }
 
+resource "aws_key_pair" "terraform-key" {
+  key_name   = "terraform-key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPPzCJLi0i4vs+lrM6EKajn1clsOUaHB9dgyfk+0XOzok8//Cd5xTPiqO1K87X1yGSJd3xam5XtTtYUDFA2EdtWKYa0apXaBEqqw/RdiioU1HCg0DH9cYIoEXkx9OLDtsjPDB+azHmmrOfyoIJVY7mViWLLnOucvDiebkcBzLuVjUUlKlOpwpzK5gal5YTeBo0Rv/WtZYKrHNJmpREFh61iqN9a7UIs0NscdI23y8tjE+Bw9fQ4e/atPfaf7GOAwvbHIrJRA2bawzPmqIWlo4U8Vizzh75k5PBcNSEtj3UHtUFpJctRP6Op2V++Y4+/23aWhZMC6MU1Txo2XpDzBkFrPxGGakh0vwfQIteIr98rvkmFoIda4zVELppWIJmH397xWOvxEaT4rMmoA7AAB5EJpJZ4v614drX03Z9x3qJXCI820w+MMYAtTSklZxfrIEudZlJBS5zWYVxViQWd+opiATTM1pB5KDTc8oYBO1wapJsemi67CII/ddSaEC5pm0= getma@DESKTOP-59V52CL"
+}
+
 resource "aws_instance" "terraform-instance" {
   ami                         = var.ami
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.terraform-subnet-01.id
   security_groups             = [aws_security_group.terraform-sg.id]
-  key_name                    = "demo"
+  key_name                    = "terraform-key"
   associate_public_ip_address = true
   tags = {
     Name = "terraform-instance-25-03-2022"
@@ -166,7 +170,7 @@ resource "aws_instance" "terraform-instance-private" {
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.terraform-subnet-02.id
   security_groups = [aws_security_group.terraform-sg-private.id]
-  key_name        = "demo"
+  key_name        = "terraform-key"
   tags = {
     Name = "terraform-instance-25-03-2022-[private]"
   }
