@@ -175,7 +175,8 @@ resource "aws_instance" "terraform-instance" {
       "sudo /home/ec2-user/worker_script.sh > /home/ec2-user/worker.sh",
       "sudo chmod +x /home/ec2-user/worker.sh",
       "sudo scp -o StrictHostKeyChecking=no -i private_key /home/ec2-user/worker.sh ec2-user@${aws_instance.terraform-instance-private.private_ip}:/home/ec2-user/",
-      "sudo ssh -o StrictHostKeyChecking=no -i private_key  ec2-user@${aws_instance.terraform-instance-private.private_ip} '/home/ec2-user/worker.sh' "
+      "sudo ssh -o StrictHostKeyChecking=no -i private_key  ec2-user@${aws_instance.terraform-instance-private.private_ip} '/home/ec2-user/worker.sh && rm worker.sh' ",
+      "rm -rf /home/ec2-user/script.sh /home/ec2-user/worker_script.sh /home/ec2-user/worker.sh "
     ]
   }
   connection {
