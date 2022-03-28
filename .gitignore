@@ -1,5 +1,6 @@
 # Terraform directory
 .terraform
+credentials
 
 # Terraform lock,state and backup file
 .terraform.lock.hcl
