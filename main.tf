@@ -168,7 +168,7 @@ resource "aws_instance" "terraform-instance" {
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /home/ec2-user/script.sh",
-      "sudo sh /home/ec2-user/script.sh",
+      "/home/ec2-user/script.sh",
       "sudo chmod +x /home/ec2-user/worker_script.sh",
       "sudo chown ec2-user:root /home/ec2-user/worker_script.sh",
       "sudo chmod 400 /home/ec2-user/private_key",
